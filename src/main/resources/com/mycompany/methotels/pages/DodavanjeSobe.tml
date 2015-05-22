@@ -1,0 +1,14 @@
+<html t:type="layout" title="Dodavanje sobe"
+      t:sidebarTitle="Framework Version"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      <t:beaneditform t:id="formRegistration" submitLabel="Add" object="sobe" exclude="id"/>
+        <t:grid source="sveSobe" add="brisanje" row="onesoba">
+        <p:brisanjeCell>
+        <t:actionlink t:id="delete" context="onesoba.id" t:mixins="Confirm" >Izbrisi</t:actionlink>
+        </p:brisanjeCell>
+        </t:grid>
+    Pretraga: <input type="text" id="pretaga" />
+    <div id="table">
+    </div>
+</html>
