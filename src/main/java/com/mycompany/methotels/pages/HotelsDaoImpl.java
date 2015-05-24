@@ -31,7 +31,7 @@ public class HotelsDaoImpl implements HotelsDAO {
     }
 
     @Override
-    public void dodajSobu(Sobe sobe) {
+    public void dodajSobuiliUpdateuj(Sobe sobe) {
         session.persist(sobe);
     }
 
@@ -70,6 +70,11 @@ public class HotelsDaoImpl implements HotelsDAO {
         Sobe drzave = (Sobe) session.createCriteria(Sobe.class).add(Restrictions.eq("id",
                 id)).uniqueResult();
         session.delete(drzave);
+    }
+
+    @Override
+    public Sobe getSobaById(Integer id) {
+        return (Sobe) session.createCriteria(Sobe.class).add(Restrictions.eq("id", id)).uniqueResult();
     }
 
 }

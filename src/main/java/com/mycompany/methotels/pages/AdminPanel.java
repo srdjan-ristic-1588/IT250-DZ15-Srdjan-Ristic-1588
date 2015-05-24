@@ -59,7 +59,7 @@ public class AdminPanel {
 
     @CommitAfter
     Object onActionFromFsobe() {
-        hotelsDao.dodajSobu(sobe);
+        hotelsDao.dodajSobuiliUpdateuj(sobe);
         return this;
     }
     //REZERVISANJE SOBE

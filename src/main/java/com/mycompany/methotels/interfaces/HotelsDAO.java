@@ -16,10 +16,12 @@ import java.util.List;
 public interface HotelsDAO {
 
     public List<Sobe> getListaSobaPoImenu(String ime);
+    
+    public Sobe getSobaById(Integer id);
 
     public List<Sobe> getListaSvihSoba();
 
-    public void dodajSobu(Sobe sobe);
+    public void dodajSobuiliUpdateuj(Sobe sobe);
 
     public List<Hoteli> getListaSvihHotela();
 

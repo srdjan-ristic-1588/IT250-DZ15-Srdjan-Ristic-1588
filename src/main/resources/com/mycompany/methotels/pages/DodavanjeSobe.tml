@@ -2,13 +2,21 @@
       t:sidebarTitle="Framework Version"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
-      <t:beaneditform t:id="formRegistration" submitLabel="Add" object="sobe" exclude="id"/>
-        <t:grid source="sveSobe" add="brisanje" row="onesoba">
-        <p:brisanjeCell>
-        <t:actionlink t:id="delete" context="onesoba.id" t:mixins="Confirm" >Izbrisi</t:actionlink>
-        </p:brisanjeCell>
+      <t:zone t:id="formZone">
+        <t:beaneditform object="sobe" submitLabel="Add/Edit" t:zone="zoneSobe" exclude="id" >
+        </t:beaneditform>
+      </t:zone>
+      <t:zone t:id="zoneSobe">
+        <t:grid source="sveSobe" t:inplace="true" exclude="id" add="edit,delete" t:options="options" row="onesoba">
+            <p:imeSobeCell>
+                <div t:id="imeSobe" value="onesoba.imeSobe" t:type="jquery" t:context="onesoba.id" />
+            </p:imeSobeCell>
+            <p:editCell>
+                <t:actionlink t:id="edit" t:zone="formZone" context="onesoba">Edit</t:actionlink>
+            </p:editCell>
+            <p:deleteCell>
+                <t:actionlink t:id="delete" t:zone="zoneSobe" context="onesoba.id">Delete</t:actionlink>
+            </p:deleteCell>
         </t:grid>
-    Pretraga: <input type="text" id="pretaga" />
-    <div id="table">
-    </div>
+      </t:zone>
 </html>
