@@ -101,11 +101,36 @@
             <version>${tapestry-release-version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>org.got5</groupId>
             <artifactId>tapestry5-jquery</artifactId>
             <version>4.0.1-SNAPSHOT</version>
             <type>jar</type>
+        </dependency>-->
+        <dependency>
+            <groupId>org.tynamo</groupId>
+            <artifactId>tapestry-resteasy</artifactId>
+            <version>0.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jackson-provider</artifactId>
+            <version>3.0.7.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-moxy</artifactId>
+            <version>2.5.1</version>
         </dependency>
     </dependencies>
     <build>
@@ -162,10 +187,10 @@
 
         <!-- This repository is only needed when the Tapestry version is a preview release, rather
         than a final release. -->
-        <repository>
+<!--        <repository>
             <id>apache-staging</id>
             <url>https://repository.apache.org/content/groups/staging/</url>
-        </repository>
+        </repository>-->
     </repositories>
 
     <properties>

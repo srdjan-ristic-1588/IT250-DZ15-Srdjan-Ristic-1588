@@ -9,6 +9,7 @@ import com.mycompany.methotels.entities.Hoteli;
 import com.mycompany.methotels.interfaces.HotelsDAO;
 import com.mycompany.methotels.entities.Sobe;
 import java.util.List;
+import javax.xml.bind.annotation.XmlTransient;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -26,6 +27,7 @@ public class HotelsDaoImpl implements HotelsDAO {
     private Session session;
 
     @Override
+    @XmlTransient
     public List<Sobe> getListaSvihSoba() {
         return session.createCriteria(Sobe.class).list();
     }
@@ -73,6 +75,7 @@ public class HotelsDaoImpl implements HotelsDAO {
     }
 
     @Override
+    @XmlTransient
     public Sobe getSobaById(Integer id) {
         return (Sobe) session.createCriteria(Sobe.class).add(Restrictions.eq("id", id)).uniqueResult();
     }

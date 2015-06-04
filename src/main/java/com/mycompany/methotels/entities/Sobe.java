@@ -6,6 +6,7 @@
 package com.mycompany.methotels.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
@@ -24,6 +27,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
  * @author BASKETBALL IN HEART
  */
 @Entity
+@XmlRootElement
 @Table(name = "sobe")
 @NamedQueries({
     @NamedQuery(name = "Sobe.findAll", query = "SELECT s FROM Sobe s")})

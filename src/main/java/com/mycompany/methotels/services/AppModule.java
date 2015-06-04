@@ -3,9 +3,11 @@ package com.mycompany.methotels.services;
 import com.mycompany.methotels.interfaces.AdminDAO;
 import com.mycompany.methotels.interfaces.HotelsDAO;
 import com.mycompany.methotels.interfaces.RezervacijeDAO;
+import com.mycompany.methotels.interfaces.SobeWebServiceInterface;
 import com.mycompany.methotels.pages.AdminDaoImpl;
 import com.mycompany.methotels.pages.HotelsDaoImpl;
 import com.mycompany.methotels.pages.RezervacijeDaoImpl;
+import com.mycompany.methotels.pages.SobeWebServiceImpl;
 import java.io.IOException;
 
 import org.apache.tapestry5.*;
@@ -17,9 +19,6 @@ import org.apache.tapestry5.ioc.annotations.Local;
 import org.apache.tapestry5.ioc.services.ApplicationDefaults;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
 import org.apache.tapestry5.services.*;
-import org.apache.tapestry5.services.javascript.JavaScriptStack;
-import org.apache.tapestry5.services.javascript.StackExtension;
-import org.apache.tapestry5.services.javascript.StackExtensionType;
 import org.slf4j.Logger;
 
 /**
@@ -33,6 +32,7 @@ public class AppModule {
         binder.bind(HotelsDAO.class, HotelsDaoImpl.class);
         binder.bind(AdminDAO.class, AdminDaoImpl.class);
         binder.bind(RezervacijeDAO.class, RezervacijeDaoImpl.class);
+        binder.bind(SobeWebServiceInterface.class, SobeWebServiceImpl.class);
         // binder.bind(MyServiceInterface.class, MyServiceImpl.class);
 
         // Make bind() calls on the binder object to define most IoC services.
