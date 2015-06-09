@@ -92,7 +92,6 @@ public class Login {
                     userfb.getId());
             Admin exist = null;
             System.out.println("proverava");
-            exist = userDao.checkIfFbExists(userfb.getId());
             if (exist == null) {
                 userDao.registerAdmin(fbuser);
                 loggedInUser = fbuser;
