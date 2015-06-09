@@ -1,61 +1,121 @@
 package com.mycompany.methotels.pages;
 
-import org.apache.tapestry5.alerts.AlertManager;
-import org.apache.tapestry5.annotations.InjectComponent;
-import org.apache.tapestry5.annotations.InjectPage;
+import com.mycompany.methotels.entities.Admin;
+import com.mycompany.methotels.interfaces.AdminDAO;
+import com.mycompany.methotels.rola.Role;
+import com.mycompany.methotels.services.FacebookService;
+import com.mycompany.methotels.services.FacebookServiceInformation;
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import java.io.IOException;
+import net.smartam.leeloo.common.exception.OAuthProblemException;
+import net.smartam.leeloo.common.exception.OAuthSystemException;
+import org.apache.tapestry5.annotations.ActivationRequestParameter;
+import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.corelib.components.Form;
-import org.apache.tapestry5.corelib.components.PasswordField;
-import org.apache.tapestry5.corelib.components.TextField;
+import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.annotations.SetupRender;
+import org.apache.tapestry5.corelib.components.BeanEditForm;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.slf4j.Logger;
 
-public class Login
-{
-	@Inject
-	private Logger logger;
+public class Login {
 
-	@Inject
-	private AlertManager alertManager;
+    @Inject
+    private AdminDAO userDao;
+    @Property
+    private Admin userLogin;
+    @SessionState
+    private Admin loggedInUser;
+    @Component
+    private BeanEditForm form;
+    @Inject
+    private FacebookService facebookService;
+    @SessionState
+    @Property
+    private FacebookServiceInformation facebookServiceInformation;
+    @SessionState
+    @Property
+    private FacebookServiceInformation information;
+    @Property
+    private com.restfb.types.User userfb;
+    @Property
+    @ActivationRequestParameter
+    private String code;
 
-	@InjectComponent
-	private Form login;
-	@InjectComponent
-	private TextField email;
-	@InjectComponent
-	private PasswordField password;
+    Object onActivate() {
+        if (loggedInUser.getUsername() != null) {
+            return Index.class;
+        }
+        return null;
+    }
 
-	@InjectPage
-	private Index index;
+    public String getMD5Hash(String yourString) {
+        try {
+            java.security.MessageDigest md
+                    = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(yourString.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,
+                        3));
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            return "";
+        }
+    }
 
-	@Property
-	private String emailValue;
-	@Property
-	private String passwordValue;
+    Object onSuccess() {
+        String password = getMD5Hash(userLogin.getPassword());
+        System.out.println(password);
+        Admin u = userDao.checkAdmin(userLogin.getUsername(), password);
+        if (u != null) {
+            loggedInUser = u;
+            System.out.println("Logovan");
+            return Index.class;
+        } else {
+            form.recordError("Uneli ste pogrešne parametre");
+            System.out.println("losi parametri");
+            return null;
+        }
+    }
 
+    public String getFacebookAuthentificationLink() throws OAuthSystemException {
+        return facebookService.getFacebookAuthentificationLink();
+    }
 
+    @CommitAfter
+    public boolean isLoggedInFb() {
+        if (facebookServiceInformation.getAccessToken() != null) {
+            Admin fbuser = new Admin(userfb.getUsername(), " ", Role.Admin,
+                    userfb.getId());
+            Admin exist = null;
+            System.out.println("proverava");
+            exist = userDao.checkIfFbExists(userfb.getId());
+            if (exist == null) {
+                userDao.registerAdmin(fbuser);
+                loggedInUser = fbuser;
+                System.out.println("registruje");
+            } else {
+                loggedInUser = exist;
+                System.out.println("postoji");
+            }
+        }
+        return facebookServiceInformation.getAccessToken() != null;
+    }
 
-	void onValidateFromLogin()
-	{
-		if ( !emailValue.equals("users@tapestry.apache.org"))
-			login.recordError(email, "Try with user: users@tapestry.apache.org");
-
-		if ( !passwordValue.equals("Tapestry5"))
-			login.recordError(password, "Try with password: Tapestry5");
-	}
-
-	Object onSuccessFromLogin()
-	{
-		logger.info("Login successful!");
-		alertManager.success("Welcome aboard!");
-
-		return index;
-	}
-
-	void onFailureFromLogin()
-	{
-		logger.warn("Login error!");
-		alertManager.error("I'm sorry but I can't log you in!");
-	}
-
+    @SetupRender
+    public void setup() throws IOException, OAuthSystemException,
+            OAuthProblemException {
+        if (code != null) {
+            facebookService.getUserAccessToken(code,
+                    information.getAccessToken());
+        }
+        code = null;
+        FacebookClient facebookClient = new DefaultFacebookClient(information.getAccessToken());
+        if (information.isLoggedIn()) {
+            userfb = facebookClient.fetchObject("me", com.restfb.types.User.class);
+        }
+    }
 }

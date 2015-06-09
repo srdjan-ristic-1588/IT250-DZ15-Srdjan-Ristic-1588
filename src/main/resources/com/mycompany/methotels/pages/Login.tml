@@ -1,16 +1,26 @@
-<html t:type="layout" title="MetHotels com.example"
-      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
-      xmlns:p="tapestry:parameter">
-
+<html t:type="layout" title="PrviTapestryProjekat com.example"
+xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+xmlns:p="tapestry:parameter">
 <div class="row">
-    <div class="span4 offset3">
-        <t:form t:id="login" class="form-signin">
-            <h2 class="form-signin-heading">Please sign in</h2>
-            <t:textfield t:id="email" value="emailValue" class="input-block-level" validate="required" placeholder="Email address" />
-            <t:passwordfield t:id="password" value="passwordValue" class="input-block-level" validate="required" placeholder="Password" />
-            <t:submit class="btn btn-large btn-primary" value="Sign in" />
-        </t:form>
-    </div>
-</div>
+<div class="span4 offset3">
 
+<t:if test="loggedInFb">
+<script>
+window.onload = function(){
+location.reload();
+} </script>
+</t:if>
+<t:beaneditform t:id="form" object="userLogin" submitlabel="Login"
+exclude="adminid,rola,facebookId">
+<t:errors/>
+<p:password>
+<t:label for="password"/>
+<t:passwordfield t:id="password" value="userLogin.password"/>
+</p:password>
+</t:beaneditform>
+<a href="${facebookAuthentificationLink}">
+<input type="button" class="input2" value="Login with facebook"/>
+</a>
+</div>
+</div>
 </html>

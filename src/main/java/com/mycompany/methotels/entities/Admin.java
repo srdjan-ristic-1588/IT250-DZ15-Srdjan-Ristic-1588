@@ -47,6 +47,8 @@ public class Admin implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "ROLA")
     private Role rola;
+    @Column(name = "FACEBOOK_ID")
+    private String facebookId;
 
     @Inject
     public Admin() {
@@ -63,6 +65,13 @@ public class Admin implements Serializable {
         this.rola = rola;
     }
 
+    public Admin(String username, String password, Role rola, String facebookId) {
+        this.username = username;
+        this.password = password;
+        this.rola = rola;
+        this.facebookId = facebookId;
+    }
+
     public Integer getAdminId() {
         return adminId;
     }
@@ -70,6 +79,15 @@ public class Admin implements Serializable {
     public void setAdminId(Integer adminId) {
         this.adminId = adminId;
     }
+
+    public String getFacebookId() {
+        return facebookId;
+    }
+
+    public void setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
+    }
+
     @Validate("required")
     public String getUsername() {
         return username;
@@ -78,6 +96,7 @@ public class Admin implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
+
     @Validate("required")
     public String getPassword() {
         return password;

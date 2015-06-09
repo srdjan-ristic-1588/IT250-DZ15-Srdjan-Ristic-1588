@@ -33,6 +33,7 @@ public class AppModule {
         binder.bind(AdminDAO.class, AdminDaoImpl.class);
         binder.bind(RezervacijeDAO.class, RezervacijeDaoImpl.class);
         binder.bind(SobeWebServiceInterface.class, SobeWebServiceImpl.class);
+        binder.bind(FacebookService.class);
         // binder.bind(MyServiceInterface.class, MyServiceImpl.class);
 
         // Make bind() calls on the binder object to define most IoC services.

@@ -15,6 +15,22 @@
             <artifactId>tapestry-core</artifactId>
             <version>${tapestry-release-version}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>net.smartam.leeloo</groupId>
+            <artifactId>oauth2-client</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.smartam.leeloo</groupId>
+            <artifactId>oauth2-common</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.restfb</groupId>
+            <artifactId>restfb</artifactId>
+            <version>1.6.11</version>
+        </dependency>
 
         <!-- Include the Log4j implementation for the SLF4J logging framework -->
         <dependency>
@@ -101,7 +117,7 @@
             <version>${tapestry-release-version}</version>
             <scope>provided</scope>
         </dependency>
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>org.got5</groupId>
             <artifactId>tapestry5-jquery</artifactId>
             <version>4.0.1-SNAPSHOT</version>
@@ -187,7 +203,7 @@
 
         <!-- This repository is only needed when the Tapestry version is a preview release, rather
         than a final release. -->
-<!--        <repository>
+        <!--        <repository>
             <id>apache-staging</id>
             <url>https://repository.apache.org/content/groups/staging/</url>
         </repository>-->
